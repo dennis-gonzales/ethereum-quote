@@ -2,7 +2,7 @@ const assert = require('assert');
 const ganache = require('ganache-cli');
 const Web3 = require('web3');
 const web3 = new Web3(ganache.provider());
-const { interface, bytecode } = require('../compile.js');
+const { interface, bytecode } = require('../compile');
 
 const INITIAL_QUOTE = 'When words fail, action speaks';
 
