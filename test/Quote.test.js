@@ -7,28 +7,28 @@ const { interface, bytecode } = require('../compile');
 const INITIAL_QUOTE = 'When words fail, action speaks';
 
 let accounts;
-let inbox;
+let quote;
 
 beforeEach(async () => {
     // get list of accounts
     accounts = await web3.eth.getAccounts();
 
-    inbox = await new web3.eth.Contract(JSON.parse(interface))
+    quote = await new web3.eth.Contract(JSON.parse(interface))
         .deploy({ data: bytecode, arguments: [INITIAL_QUOTE] })
         .send({ from: accounts[0], gas: '1000000' });
 });
 
 describe('Quote', () => {
     it('is deployed', () => {
-        assert.ok(inbox._address);
+        assert.ok(quote._address);
     });
     it('has a quote', async () => {
-        const message = await inbox.methods.quote().call();
+        const message = await quote.methods.quote().call();
         assert.ok(message);
     });
     it('can quote change', async () => {
-        await inbox.methods.updateQuote('Hello World!').send({from: accounts[0]});
-        const message = await inbox.methods.quote().call();
+        await quote.methods.updateQuote('Hello World!').send({from: accounts[0]});
+        const message = await quote.methods.quote().call();
         assert.strictEqual(message, 'Hello World!');
     });
 })
