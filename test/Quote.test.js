@@ -31,4 +31,4 @@ describe('Quote', () => {
         const message = await quote.methods.quote().call();
         assert.strictEqual(message, 'Hello World!');
     });
-})
+});
